@@ -1,5 +1,6 @@
 import json
 import re
+import httpx
 from google import genai
 from google.genai import types as genai_types
 
@@ -15,7 +16,13 @@ _client: genai.Client | None = None
 def _get_client() -> genai.Client | None:
     global _client
     if _client is None and settings.GEMINI_API_KEY:
-        _client = genai.Client(api_key=settings.GEMINI_API_KEY)
+        _client = genai.Client(
+            api_key=settings.GEMINI_API_KEY,
+            http_options={
+                'timeout': 5000,
+                'retry_options': genai_types.HttpRetryOptions(attempts=1)
+            }
+        )
     return _client
 
 

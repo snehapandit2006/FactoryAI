@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
@@ -18,10 +19,15 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# Enable ProxyHeadersMiddleware to trust the X-Forwarded-For header from Render's load balancer.
+# On Render, the load balancer is guaranteed to strip spoofed headers from untrusted clients,
+# making `trusted_hosts=["*"]` safe for this specific deployment architecture.
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts=["*"])
+
 # CORS configuration for frontend communication
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all for development & local demo testing
+    allow_origins=[origin.strip() for origin in settings.CORS_ORIGINS.split(",") if origin.strip()],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

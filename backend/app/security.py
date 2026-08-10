@@ -1,6 +1,5 @@
 import re
 import bleach
-from fastapi import HTTPException, status
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
@@ -46,15 +45,6 @@ def detect_prompt_injection(text: str) -> bool:
             return True
     return False
 
-def validate_text_length(text: str, max_length: int, field_name: str = "Input") -> None:
-    """
-    Strict length check before processing.
-    """
-    if len(text) > max_length:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"{field_name} exceeds maximum character limit of {max_length} characters (received {len(text)})."
-        )
 
 def sanitize_output_confidence(output_text: str) -> str:
     """

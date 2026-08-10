@@ -83,10 +83,12 @@ factoryai/
 | Input sanitization          | `bleach.clean()` strips all HTML tags before any processing |
 | Prompt injection mitigation | Regex-based detection of common instruction-override patterns combined with system-level domain constraints. Does not claim to eliminate all injection vectors. |
 | Output confidence guard     | Strips hallucinated float percentages → qualitative `Low / Medium / High` |
-| Length limits               | Incident description: 1000 chars · Chat message: 500 chars |
-| Rate limiting               | `slowapi` — 30 requests/minute per IP address |
+| Length limits               | Incident description: 1000 chars · Chat message: 500 chars (enforced by Pydantic schema) |
+| Rate limiting               | `slowapi` — 30 requests/minute on `/api/analyze` and `/api/chat`. `ProxyHeadersMiddleware` configured so Render's load balancer forwards the real client IP via `X-Forwarded-For`. The `/health` endpoint is intentionally exempt so monitoring checks are never rate-limited. |
+| CORS                        | Allowed origins read from `CORS_ORIGINS` environment variable (comma-separated). Defaults to `localhost:3000`. Set to your Vercel URL in production. |
 | Domain locking (chat)       | System prompt + keyword fast-path filter rejects off-topic queries |
 | Environment variables       | API key loaded from `.env` via `pydantic-settings`, never hardcoded |
+| Gemini timeout              | SDK `http_options.timeout` set to 5000 ms with `retry_options.attempts=1` — on timeout or API failure the deterministic fallback engine activates automatically |
 
 ---
 
@@ -175,7 +177,14 @@ The fallback engine uses configurable demonstration thresholds:
 
 ## Notes for Demo
 
-- The app works **without a Gemini API key** using the expert fallback engine.
+- The app works **without a Gemini API key** using the expert fallback engine. If the Gemini API is unreachable or fails, the fallback activates automatically within the configured timeout — it does not hang or crash.
 - Add your key to `backend/.env` for full AI-powered responses.
-- Rate limiter is configured at 30 req/min — tell reviewers: *"The API is rate-limited via slowapi."*
-- The security refusal response for prompt injection demonstrates: *"Ignore previous instructions"* → blocked immediately.
+- Rate limiter is configured at 30 req/min on `/analyze` and `/chat`. The `/health` endpoint is intentionally exempt.
+- The security refusal response for prompt injection demonstrates: *"Ignore previous instructions"* → HTTP 400 immediately.
+- CORS allowed origins are set via the `CORS_ORIGINS` environment variable. Restrict this to your Vercel URL in production.
+
+---
+
+## Safety Disclaimer
+
+> FactoryAI Copilot is a demonstration decision-support tool. AI-generated recommendations must be validated by qualified personnel and applicable plant safety procedures before maintenance actions are taken.

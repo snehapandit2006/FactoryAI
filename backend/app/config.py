@@ -17,11 +17,7 @@ class Settings(BaseSettings):
     RATE_LIMIT_PER_MINUTE: str = "30/minute"
     
     # CORS
-    CORS_ORIGINS: List[str] = [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:3001",
-    ]
+    CORS_ORIGINS: str = "http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001"
 
     model_config = SettingsConfigDict(
         env_file=".env",

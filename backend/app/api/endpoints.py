@@ -8,8 +8,7 @@ from app.schemas import (
 )
 from app.security import (
     limiter,
-    detect_prompt_injection,
-    validate_text_length
+    detect_prompt_injection
 )
 from app.services.ai import analyze_incident_ai, chat_maintenance_ai
 from app.config import settings
@@ -38,10 +37,7 @@ def health_check():
 )
 @limiter.limit(settings.RATE_LIMIT_PER_MINUTE)
 def analyze_incident(request: Request, body: IncidentAnalysisRequest):
-    # 1. Validate description length
-    validate_text_length(body.description, settings.MAX_INCIDENT_DESC_LENGTH, field_name="Incident Description")
-
-    # 2. Prompt Injection check
+    # 1. Prompt Injection check
     if detect_prompt_injection(body.description) or detect_prompt_injection(body.machine_id):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -58,10 +54,7 @@ def analyze_incident(request: Request, body: IncidentAnalysisRequest):
 )
 @limiter.limit(settings.RATE_LIMIT_PER_MINUTE)
 def chat_copilot(request: Request, body: ChatMessageRequest):
-    # 1. Validate message length limit
-    validate_text_length(body.message, settings.MAX_CHAT_MSG_LENGTH, field_name="Chat Message")
-
-    # 2. Prompt Injection check
+    # 1. Prompt Injection check
     if detect_prompt_injection(body.message):
         # Explicit polite refusal on prompt injection as specified by user requirements
         return ChatMessageResponse(
