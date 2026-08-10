@@ -4,6 +4,19 @@
 
 ---
 
+## 🚀 Live Demo
+
+| Service  | URL |
+|----------|-----|
+| **Frontend** (Vercel) | [https://factory-ai-i4cb.vercel.app](https://factory-ai-i4cb.vercel.app) |
+| **Backend API** (Render) | [https://factoryai-79fc.onrender.com](https://factoryai-79fc.onrender.com) |
+| **API Health Check** | [https://factoryai-79fc.onrender.com/api/health](https://factoryai-79fc.onrender.com/api/health) |
+| **Swagger Docs** | [https://factoryai-79fc.onrender.com/docs](https://factoryai-79fc.onrender.com/docs) |
+
+> **Note:** The Render backend may take ~30 seconds to wake up on first request (free tier cold start).
+
+---
+
 ## Overview
 
 FactoryAI Copilot is a production-quality demo application that provides two core features for industrial plant operators and maintenance engineers:
