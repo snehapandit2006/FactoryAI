@@ -1,6 +1,6 @@
 "use client";
 
-import { IncidentResponse } from "@/lib/api";
+import { IncidentResponse } from "../lib/api";
 import { motion } from "framer-motion";
 import { AlertTriangle, Clock, Toolbox, ShieldCheck, Wrench, HelpCircle, ChevronRight } from "lucide-react";
 

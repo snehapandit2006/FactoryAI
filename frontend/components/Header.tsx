@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle, CheckCircle, Wifi, WifiOff, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
-import { checkBackendHealth } from "@/lib/api";
+import { checkBackendHealth } from "../lib/api";
 
 interface HeaderProps {
   activeTab: "analyzer" | "chat";

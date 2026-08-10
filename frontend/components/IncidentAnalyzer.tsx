@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { IncidentRequest, IncidentResponse, analyzeIncident } from "@/lib/api";
+import { IncidentRequest, IncidentResponse, analyzeIncident } from "../lib/api";
 import AnalysisResult from "./AnalysisResult";
 import { AlertCircle, Cpu, Thermometer, Activity, FileText, Zap } from "lucide-react";
 

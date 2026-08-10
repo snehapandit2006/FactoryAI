@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Header from "@/components/Header";
-import IncidentAnalyzer from "@/components/IncidentAnalyzer";
-import MaintenanceChat from "@/components/MaintenanceChat";
+import Header from "../components/Header";
+import IncidentAnalyzer from "../components/IncidentAnalyzer";
+import MaintenanceChat from "../components/MaintenanceChat";
 
 type Tab = "analyzer" | "chat";
 

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChatResponse, sendChatMessage } from "@/lib/api";
+import { ChatResponse, sendChatMessage } from "../lib/api";
 import { MessageSquare, Send, AlertCircle, Info } from "lucide-react";
 
 const MAX_MSG_LENGTH = 500;
