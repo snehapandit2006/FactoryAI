@@ -19,11 +19,13 @@
 
 ## Overview
 
-FactoryAI Copilot is a production-quality demo application that provides two core features for industrial plant operators and maintenance engineers:
+FactoryAI Copilot is a production-oriented MVP demonstrating AI-assisted manufacturing incident analysis and maintenance support. It provides two core features for industrial plant operators and maintenance engineers:
 
 1. **Incident Analyzer** — Submit machine telemetry (ID, temperature, vibration) and a free-text incident description. The AI returns a structured report: root cause, severity, immediate actions, recommended maintenance, safety precautions, required tools, and estimated downtime.
 
-2. **Maintenance Copilot Chat** — A domain-locked chatbot that answers questions exclusively about manufacturing, industrial maintenance, predictive diagnostics, and factory safety. Off-topic and prompt injection attempts are blocked.
+2. **Maintenance Copilot Chat** — A domain-locked chatbot that answers questions exclusively about manufacturing, industrial maintenance, predictive diagnostics, and factory safety. Off-topic queries and common instruction-override patterns are detected and declined.
+
+> ⚠️ **Safety Notice:** FactoryAI Copilot is a demonstration and decision-support tool. AI-generated recommendations must be validated by qualified personnel and applicable plant safety procedures before any maintenance action is taken.
 
 ---
 
@@ -79,7 +81,7 @@ factoryai/
 | Guard                       | Implementation |
 |-----------------------------|----------------|
 | Input sanitization          | `bleach.clean()` strips all HTML tags before any processing |
-| Prompt injection detection  | Regex pattern matching against 12+ known injection patterns |
+| Prompt injection mitigation | Regex-based detection of common instruction-override patterns combined with system-level domain constraints. Does not claim to eliminate all injection vectors. |
 | Output confidence guard     | Strips hallucinated float percentages → qualitative `Low / Medium / High` |
 | Length limits               | Incident description: 1000 chars · Chat message: 500 chars |
 | Rate limiting               | `slowapi` — 30 requests/minute per IP address |
@@ -158,14 +160,16 @@ POST /api/chat
 
 ## AI Fallback Engine
 
-If the Gemini API key is absent or the API call fails, the backend automatically falls back to a **deterministic rule-based expert engine** that produces high-quality, accurate responses based on industrial diagnostic thresholds:
+If the Gemini API key is absent or the API call fails, the backend automatically falls back to a **deterministic rule-based engine** to ensure the demo always returns a structured response.
+
+The fallback engine uses configurable demonstration thresholds:
 
 - **CRITICAL**: Temperature > 80°C **AND** Vibration > 10 mm/s  
 - **HIGH**: Temperature > 80°C  
 - **MEDIUM**: Vibration > 10 mm/s  
 - **LOW**: All parameters within normal range
 
-This ensures the demo **always works**, even without an internet connection.
+> These thresholds are illustrative and are not intended to replace machine-specific engineering limits or inspection procedures. Different equipment operates within different acceptable temperature and vibration ranges.
 
 ---
 
