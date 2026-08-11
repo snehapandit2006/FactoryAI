@@ -19,6 +19,7 @@ export interface IncidentResponse {
   additional_data_needed: string[];
   confidence: string;
   sanitized_input: boolean;
+  source?: string;
 }
 
 export interface ChatRequest {
@@ -29,6 +30,7 @@ export interface ChatResponse {
   response: string;
   is_refusal: boolean;
   confidence: string;
+  source?: string;
 }
 
 export interface HealthResponse {

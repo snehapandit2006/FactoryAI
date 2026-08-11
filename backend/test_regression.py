@@ -39,7 +39,7 @@ check("A.2 status is online", body.get("status") == "online", body.get("status")
 check("A.3 guardrails reported active", "security_guardrails" in body)
 
 # ── B-C. Analyze + Chat (with SUSPENDED key — should hit fallback) ──────────────
-print("\nB. POST /api/analyze (Gemini suspended → fallback engine)")
+print("\nB. POST /api/analyze (Gemini suspended -> fallback engine)")
 code, body = req("POST", "/api/analyze", {
     "machine_id": "CNC-MILL-01",
     "temperature": 92,

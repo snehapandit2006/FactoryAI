@@ -28,6 +28,7 @@ class IncidentAnalysisResponse(BaseModel):
     additional_data_needed: List[str]
     confidence: str = Field(default="Medium", description="Qualitative confidence rating (e.g. Medium, High)")
     sanitized_input: bool = True
+    source: str = Field(default="gemini", description="Source engine: 'gemini' or 'fallback'")
 
 class ChatMessageRequest(BaseModel):
     message: str = Field(..., description="User message to Maintenance Copilot", min_length=2, max_length=500)
@@ -43,6 +44,7 @@ class ChatMessageResponse(BaseModel):
     response: str
     is_refusal: bool = False
     confidence: str = "High"
+    source: str = Field(default="gemini", description="Source engine: 'gemini' or 'fallback'")
 
 class SecurityRefusalResponse(BaseModel):
     error: str = "Security Refusal"

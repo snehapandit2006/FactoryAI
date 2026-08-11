@@ -8,17 +8,18 @@ limiter = Limiter(key_func=get_remote_address)
 
 # Known prompt injection patterns
 INJECTION_PATTERNS = [
-    r"(?i)ignore\s+(all\s+)?(previous|above)\s+instructions?",
-    r"(?i)disregard\s+(all\s+)?(previous|above)\s+instructions?",
-    r"(?i)forget\s+(all\s+)?(previous|your)\s+rules",
+    r"(?i)ignore\s+(all\s+)?(previous|above|your|system)?\s*(instructions?|rules?)",
+    r"(?i)disregard\s+(all\s+)?(previous|above|your|system)?\s*(instructions?|rules?)",
+    r"(?i)forget\s+(all\s+)?(previous|above|your|system)?\s*(rules?|instructions?)",
+    r"(?i)override\s+(all\s+)?(previous|above|your|system|security)?\s*(instructions?|rules?|security)",
+    r"(?i)bypass\s+(all\s+)?(previous|above|your|system|security|restrictions)?\s*(instructions?|rules?|restrictions)?",
+    r"(?i)pretend\s+(the\s+)?(manufacturing\s+)?(restriction|rule|requirement)s?\s+(doesn't|does\s+not|don't)\s+exist",
+    r"(?i)pretend\s+to\s+be",
     r"(?i)you\s+are\s+now\s+a",
     r"(?i)act\s+as\s+a",
-    r"(?i)pretend\s+to\s+be",
     r"(?i)reveal\s+(your|the)?\s*system\s+prompt",
     r"(?i)system\s+prompt",
     r"(?i)jailbreak",
-    r"(?i)override\s+security",
-    r"(?i)bypass\s+restrictions",
     r"(?i)dan\s+mode",
 ]
 

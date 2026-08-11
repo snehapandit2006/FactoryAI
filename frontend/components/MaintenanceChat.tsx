@@ -12,6 +12,7 @@ interface Message {
   role: "user" | "ai";
   content: string;
   is_refusal?: boolean;
+  source?: string;
   timestamp: string;
 }
 
@@ -65,6 +66,7 @@ export default function MaintenanceChat() {
         role: "ai",
         content: res.response,
         is_refusal: res.is_refusal,
+        source: res.source,
         timestamp: new Date().toISOString(),
       };
       setMessages((prev) => [...prev, aiMsg]);
@@ -272,7 +274,10 @@ export default function MaintenanceChat() {
                   paddingRight: msg.role === "user" ? ".5rem" : 0,
                 }}
               >
-                {msg.role === "ai" ? "Copilot" : "You"} · {formatTime(msg.timestamp)}
+                {msg.role === "ai"
+                  ? `Copilot · ${msg.source === "fallback" ? "Deterministic fallback" : "Gemini 2.5 Flash"}`
+                  : "You"}{" "}
+                · {formatTime(msg.timestamp)}
               </span>
             </motion.div>
           ))}

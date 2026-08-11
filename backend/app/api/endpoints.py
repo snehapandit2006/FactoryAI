@@ -54,14 +54,16 @@ def analyze_incident(request: Request, body: IncidentAnalysisRequest):
 )
 @limiter.limit(settings.RATE_LIMIT_PER_MINUTE)
 def chat_copilot(request: Request, body: ChatMessageRequest):
+    print(f"[CHAT] Request received: {body.message[:60]!r}")
     # 1. Prompt Injection check
     if detect_prompt_injection(body.message):
-        # Explicit polite refusal on prompt injection as specified by user requirements
+        print("[CHAT] Injection validation: FAIL (blocked at endpoint)")
         return ChatMessageResponse(
             response="I'm designed specifically for manufacturing engineering assistance.",
             is_refusal=True,
-            confidence="High"
+            confidence="High",
+            source="fallback"
         )
 
-    # 3. Call Chat AI Service
+    # 2. Call Chat AI Service
     return chat_maintenance_ai(body.message)
