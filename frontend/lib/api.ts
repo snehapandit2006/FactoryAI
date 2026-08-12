@@ -1,4 +1,5 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = rawApiUrl.replace(/\/+$/, "").replace(/\/api$/, "");
 
 export interface IncidentRequest {
   machine_id: string;
@@ -49,7 +50,7 @@ export interface HealthResponse {
 
 export async function checkBackendHealth(): Promise<HealthResponse | null> {
   try {
-    const res = await fetch(`${API_BASE_URL}/health`, {
+    const res = await fetch(`${API_URL}/api/health`, {
       method: "GET",
       cache: "no-store",
     });
@@ -62,7 +63,7 @@ export async function checkBackendHealth(): Promise<HealthResponse | null> {
 }
 
 export async function analyzeIncident(payload: IncidentRequest): Promise<IncidentResponse> {
-  const res = await fetch(`${API_BASE_URL}/analyze`, {
+  const res = await fetch(`${API_URL}/api/analyze`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -78,7 +79,7 @@ export async function analyzeIncident(payload: IncidentRequest): Promise<Inciden
 }
 
 export async function sendChatMessage(payload: ChatRequest): Promise<ChatResponse> {
-  const res = await fetch(`${API_BASE_URL}/chat`, {
+  const res = await fetch(`${API_URL}/api/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
