@@ -107,7 +107,7 @@ Exactly 30 requests allowed, then 429 for all subsequent requests in the same mi
 - `main.py`: `allow_origins` now reads `settings.CORS_ORIGINS.split(",")`  
 - `.env.example`: `CORS_ORIGINS` variable documented with instructions
 
-**Usage:** Set `CORS_ORIGINS=https://factory-ai-i4cb.vercel.app` in Render environment variables to restrict production CORS. Local development defaults to `localhost:3000`.
+**Usage:** Set `CORS_ORIGINS=https://factory-ai-two.vercel.app` in Render environment variables to restrict production CORS. Local development defaults to `localhost:3000`.
 
 **Note:** This fix enables per-environment restriction but does not force it. The Render environment variable must be set manually. This is documented.
 

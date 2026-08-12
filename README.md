@@ -8,7 +8,7 @@
 
 | Service  | URL |
 |----------|-----|
-| **Frontend** (Vercel) | [https://factory-ai-i4cb.vercel.app](https://factory-ai-i4cb.vercel.app) |
+| **Frontend** (Vercel) | [https://factory-ai-two.vercel.app](https://factory-ai-two.vercel.app) |
 | **Backend API** (Render) | [https://factoryai-79fc.onrender.com](https://factoryai-79fc.onrender.com) |
 | **API Health Check** | [https://factoryai-79fc.onrender.com/api/health](https://factoryai-79fc.onrender.com/api/health) |
 | **Swagger Docs** | [https://factoryai-79fc.onrender.com/docs](https://factoryai-79fc.onrender.com/docs) |
