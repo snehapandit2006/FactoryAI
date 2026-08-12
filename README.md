@@ -35,7 +35,7 @@ FactoryAI Copilot is a production-oriented MVP demonstrating AI-assisted manufac
 |-----------|-------------------------------------|
 | Frontend  | Next.js 15 · TypeScript · Tailwind  |
 | Backend   | FastAPI · Python 3.12 · Pydantic v2 |
-| AI        | Gemini 2.5 Flash (`google-genai`)   |
+| AI        | Gemini 3.6 Flash (`google-genai`)   |
 | Security  | bleach · slowapi · custom guards    |
 
 ---
@@ -49,7 +49,7 @@ factoryai/
 │   │   ├── api/
 │   │   │   └── endpoints.py     # POST /api/analyze, POST /api/chat, GET /api/health
 │   │   ├── services/
-│   │   │   └── ai.py            # Gemini 2.5 Flash calls + expert fallback engine
+│   │   │   └── ai.py            # Gemini 3.6 Flash calls + expert fallback engine
 │   │   ├── config.py            # pydantic-settings (env vars)
 │   │   ├── models.py            # Enums: SeverityLevel, ConfidenceLevel
 │   │   ├── schemas.py           # Pydantic request/response models

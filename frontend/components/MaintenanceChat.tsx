@@ -124,7 +124,7 @@ export default function MaintenanceChat() {
             Maintenance Copilot
           </div>
           <div style={{ fontSize: ".73rem", color: "var(--neutral-400)" }}>
-            Manufacturing engineering assistant · Powered by Gemini 2.5 Flash
+            Manufacturing engineering assistant · Powered by Gemini 3.6 Flash
           </div>
         </div>
         <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: ".35rem" }}>
@@ -275,7 +275,7 @@ export default function MaintenanceChat() {
                 }}
               >
                 {msg.role === "ai"
-                  ? `Copilot · ${msg.source === "fallback" ? "Deterministic fallback" : "Gemini 2.5 Flash"}`
+                  ? `Copilot · ${msg.source === "fallback" ? "Deterministic fallback" : "Gemini 3.6 Flash"}`
                   : "You"}{" "}
                 · {formatTime(msg.timestamp)}
               </span>

@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     
     # Environment & Gemini
     GEMINI_API_KEY: str = ""
-    GEMINI_MODEL: str = "gemini-2.5-flash"
+    GEMINI_MODEL: str = "gemini-3.6-flash"
     
     # Security & Limits
     MAX_INCIDENT_DESC_LENGTH: int = 1000

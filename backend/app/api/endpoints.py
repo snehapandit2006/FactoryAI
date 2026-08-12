@@ -21,7 +21,7 @@ def health_check():
         "status": "online",
         "service": settings.PROJECT_NAME,
         "version": settings.VERSION,
-        "ai_engine": "Gemini 2.5 Flash",
+        "ai_engine": "Gemini 3.6 Flash",
         "security_guardrails": {
             "prompt_injection_protection": "active",
             "input_sanitization": "active (bleach)",

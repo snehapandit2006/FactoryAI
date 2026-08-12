@@ -69,7 +69,7 @@ export default function HomePage() {
                     boxShadow: "0 0 0 2px rgba(74,222,128,.3)",
                   }}
                 />
-                Gemini 2.5 Flash · Live
+                Gemini 3.6 Flash · Live
               </div>
 
               <h1
@@ -181,7 +181,7 @@ export default function HomePage() {
               Next.js 15
             </span>
             <span style={{ background: "var(--neutral-100)", padding: ".2rem .55rem", borderRadius: 6, fontWeight: 500, color: "var(--neutral-500)" }}>
-              Gemini 2.5 Flash
+              Gemini 3.6 Flash
             </span>
           </span>
         </div>

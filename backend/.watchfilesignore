@@ -1,0 +1,6 @@
+test_*.py
+live_smoke_test.py
+*.md
+__pycache__
+*.pyc
+.env

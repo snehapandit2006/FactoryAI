@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "FactoryAI Copilot — Industrial Maintenance Assistant",
   description:
-    "AI-powered manufacturing incident analysis and maintenance copilot. Powered by Gemini 2.5 Flash for root cause analysis, severity assessment, and predictive maintenance recommendations.",
+    "AI-powered manufacturing incident analysis and maintenance copilot. Powered by Gemini 3.6 Flash for root cause analysis, severity assessment, and predictive maintenance recommendations.",
   keywords: [
     "manufacturing AI",
     "industrial maintenance",
