@@ -9,20 +9,25 @@ import urllib.request
 import urllib.error
 import urllib.parse
 
+from fastapi.testclient import TestClient
+from app.main import app
+
+client = TestClient(app)
 BASE = "http://localhost:8000"
 PASS = "PASS"
 FAIL = "FAIL"
 results = []
 
 def req(method, path, data=None):
-    url = BASE + path
-    body = json.dumps(data).encode() if data else None
-    r = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"}, method=method)
+    if method == "GET":
+        res = client.get(path)
+    else:
+        res = client.post(path, json=data)
     try:
-        res = urllib.request.urlopen(r, timeout=12)
-        return res.status, json.loads(res.read())
-    except urllib.error.HTTPError as e:
-        return e.code, json.loads(e.read() or b"{}")
+        body = res.json()
+    except Exception:
+        body = {}
+    return res.status_code, body
 
 def check(name, passed, detail=""):
     status = PASS if passed else FAIL
@@ -52,7 +57,7 @@ check("B.3 severity is CRITICAL (92°C + 14mm/s triggers compound fault)", body.
 check("B.4 has immediate_actions list", isinstance(body.get("immediate_actions"), list) and len(body.get("immediate_actions", [])) > 0)
 check("B.5 sanitized_input flag present", "sanitized_input" in body)
 
-print("\nC. POST /api/chat (Gemini suspended → offline KB fallback)")
+print("\nC. POST /api/chat (Gemini suspended -> offline KB fallback)")
 code, body = req("POST", "/api/chat", {"message": "What causes overheating in CNC spindle motors?"})
 check("C.1 returns HTTP 200", code == 200, f"got {code}")
 check("C.2 has response text", bool(body.get("response")))
@@ -106,7 +111,7 @@ c, b = req("POST", "/api/analyze", {
     "machine_id": "CNC-01", "temperature": 72, "vibration": 4,
     "description": "<script>alert('xss')</script><b>Machine overheating fault</b>"
 })
-check("H. XSS input accepted (HTML stripped) → 200", c == 200, f"got {c}")
+check("H. XSS input accepted (HTML stripped) -> 200", c == 200, f"got {c}")
 check("H. sanitized_input=True in response", b.get("sanitized_input") == True)
 
 # ── I-J. 1000/1001 character limits ─────────────────────────────────────────────
