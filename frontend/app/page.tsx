@@ -1,15 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "../components/Header";
 import IncidentAnalyzer from "../components/IncidentAnalyzer";
 import MaintenanceChat from "../components/MaintenanceChat";
+import { checkBackendHealth, type HealthResponse } from "../lib/api";
 
 type Tab = "analyzer" | "chat";
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState<Tab>("analyzer");
+  const [health, setHealth] = useState<HealthResponse | null>(null);
+  const [healthLoading, setHealthLoading] = useState(true);
+
+  useEffect(() => {
+    checkBackendHealth().then((h) => {
+      setHealth(h);
+      setHealthLoading(false);
+    });
+  }, []);
+
+  // Derive badge state from health
+  const geminiLive = health?.gemini_available === true;
+  const backendOnline = health !== null;
+
+  const badgeDot = geminiLive ? "#4ade80" : backendOnline ? "#facc15" : "#f87171";
+  const badgeDotGlow = geminiLive
+    ? "rgba(74,222,128,.3)"
+    : backendOnline
+    ? "rgba(250,204,21,.3)"
+    : "rgba(248,113,113,.3)";
+  const badgeLabel = healthLoading
+    ? "Checking status..."
+    : geminiLive
+    ? "Gemini 3.6 Flash · Live"
+    : backendOnline
+    ? "Fallback · Active"
+    : "Backend Unavailable";
+
+  const footerAiLabel = geminiLive ? "Gemini 3.6 Flash" : "Deterministic Fallback";
 
   return (
     <>
@@ -65,11 +95,11 @@ export default function HomePage() {
                     width: 6,
                     height: 6,
                     borderRadius: "50%",
-                    background: "#4ade80",
-                    boxShadow: "0 0 0 2px rgba(74,222,128,.3)",
+                    background: badgeDot,
+                    boxShadow: `0 0 0 2px ${badgeDotGlow}`,
                   }}
                 />
-                Gemini 3.6 Flash · Live
+                {badgeLabel}
               </div>
 
               <h1
@@ -181,7 +211,7 @@ export default function HomePage() {
               Next.js 15
             </span>
             <span style={{ background: "var(--neutral-100)", padding: ".2rem .55rem", borderRadius: 6, fontWeight: 500, color: "var(--neutral-500)" }}>
-              Gemini 3.6 Flash
+              {footerAiLabel}
             </span>
           </span>
         </div>

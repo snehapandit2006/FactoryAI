@@ -10,18 +10,20 @@ from app.security import (
     limiter,
     detect_prompt_injection
 )
-from app.services.ai import analyze_incident_ai, chat_maintenance_ai
+from app.services.ai import analyze_incident_ai, chat_maintenance_ai, _get_client
 from app.config import settings
 
 router = APIRouter()
 
 @router.get("/health")
 def health_check():
+    gemini_available = _get_client() is not None
     return {
         "status": "online",
         "service": settings.PROJECT_NAME,
         "version": settings.VERSION,
         "ai_engine": "Gemini 3.6 Flash",
+        "gemini_available": gemini_available,
         "security_guardrails": {
             "prompt_injection_protection": "active",
             "input_sanitization": "active (bleach)",
@@ -29,6 +31,7 @@ def health_check():
             "rate_limiter": "active (slowapi)"
         }
     }
+
 
 @router.post(
     "/analyze",

@@ -38,6 +38,7 @@ export interface HealthResponse {
   service: string;
   version: string;
   ai_engine: string;
+  gemini_available: boolean;
   security_guardrails: {
     prompt_injection_protection: string;
     input_sanitization: string;
